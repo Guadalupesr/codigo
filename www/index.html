@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css">
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
+        <style>
+            th { font-size: 15px;
+                font-family: Arial;
+                font-weight: normal; padding: 8px; background: #b9c9fe; border-top: 4px solid #aabcfe;
+                text-transform:uppercase;
+                 border-bottom: 1px solid #fff; color: #039; 
+                }
+            
+            tr {
+                border: 1px solid #000;
+            }
+            td { padding: 8px; background: #e8edff; border-bottom: 1px solid #fff; color: #669; border-top: 1px solid transparent; }
+            .table-stroke thead th {
+                  border-bottom: 1px solid rgba(0, 0, 0, .1);
+                }
+                .table-stroke tbody th,
+                .table-stroke tbody td {
+                  border-bottom: 1px solid rgba(0, 0, 0, .05);
+                }
+ 
+
+            tr:hover td { background: #d0dafd; color: #339; }
+            /* Add alternating row stripes */
+            .table-stripe tbody tr:nth-child(odd) td,
+            .table-stripe tbody tr:nth-child(odd) th {
+              background-color: rgba(0,0,0,0.04);
+            }
+            /* Add stroke to the header and last item */
+            .table-stripe thead th,
+            .table-stripe tbody tr:last-child {
+              border-bottom: 1px solid rgba(0, 0, 0, .1);
+            }
+
+        </style>
+        
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        
+    </head>
+<body>
+
+        <!-- this UL will be populated with the data from the php array -->
+        <ul></ul>
+        <div data-role="main" class="ui-content">
+        <script>
+                    window.onload = function() {
+                        document.querySelector('input[name="seleccioncolor"]').addEventListener('change',function(){
+                            document.querySelector('#capa').style.background= this.value;
+                             document.querySelector('#capa1').style.background= this.value;
+                        });
+                    }
+                </script>
+        <input id="filterTable-input" data-type="search" placeholder="Buscar registro...">
+ <table data-role="table" class="ui-responsive ui-shadow" id="myTable" data-filter="true" data-input="#filterTable-input"data-mode="reflow"> 
+                <thead >
+                <tr>
+                    <th data-priority="1">clave</th>
+                    <th data-priority="2">asunto</th>
+                    <th data-priority="3">autor</th>
+                    <th data-priority="4">categoria</th>
+                    <th data-priority="5">area</th>
+                    <th data-priority="6">prioridad</th>
+                    <th data-priority="7">fecha</th>
+                    <th data-priority="8">activo</th>
+                    <th data-priority="9">descripcion</th>
+                </tr>
+                </thead>
+                <tbody>
+                <script type="text/javascript">
+var url = 'http://empowerlabs.com/intellibanks/data/EmpowerLabsIntra/DBTXTjson.php';
+$.ajax({
+    type:"POST",
+    url:url,
+    success:function(result){
+    
+            var $tabla = $("#myTable");
+            $tabla.find("tr:gt(0)").remove();
+           for (var idx in result)
+            {
+                alum = result[idx];
+                $tabla.append(
+                    "<tr><td>"+alum.ht+"</td><td>"+alum.asunto+"</td><td>" + alum.author + "</td><td>" + alum.categoria +"</td><td>" + alum.area +"</td><td>" + alum.prioridad +"</td><td>" + alum.fecha + "</td><td>" + alum.activo +"</td><td>" + alum.descripcion +"</td></tr>"); 
+            } 
+           
+             }
+    }); 
+</script>
+                </tbody>
+</table>
+
+</div>
+    
+
+
+</body>
+</html>
